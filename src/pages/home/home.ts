@@ -15,20 +15,29 @@ export class HomePage {
 
 
   constructor(public navCtrl: NavController, private deviceMotion: DeviceMotion) {
-    var start = this.deviceMotion.getCurrentAcceleration().then((acceleration : DeviceMotionAccelerationData) => { this.initial = acceleration; });
+    this.color = "this isn't working";
+
+
+  }
+
+  getColor() {
     var subscription = this.deviceMotion.watchAcceleration().subscribe((acceleration: DeviceMotionAccelerationData) => { this.model = acceleration; });
-    this.getColor();
+    // var start = this.deviceMotion.getCurrentAcceleration().then((acceleration : DeviceMotionAccelerationData) => { this.initial = acceleration; });
+    if (this.model.x == 2.37 && this.model.y == 6.52) {
+      return this.color = "red";
+    }
+    else { if(this.model.x == -2.37 && this.model.y == 6.52) {
+      return this.color = "blue";}
+    }
 
-  }
+    if ( this.model.x == 0 && this.model.y==5.63) {
+      return this.color="green";
+    }
+    else { if(this.model.x == 0 && this.model.y == 8.04) {
+      return this.color= "yellow"; }
+    }
 
-getColor() {
-  switch (this.model) {
-    case this.model.z >= this.initial.z: this.color= "blue"; break;
-
-    case this.model.z <=this.initial.z: this.color="red"; break;
-
-    // case this.model.z >=7: this.color="green"; break;
   }
 }
 
-}
+
