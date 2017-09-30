@@ -1,9 +1,14 @@
 <ion-content padding>
-<div><h1>
+<div>
+  <h1>
   <p>{{model.x}}</p>
   <p>{{model.y}}</p>
   <p>{{model.z}}</p>
-  <button (click)="getColor()">Get your color</button>
-</h1></div>
-<div><p>{{color}}</p></div>
+  <button (click)="colorSwapper()">Get your color</button>
+  </h1>
+</div>
+<div>
+  <p>:{{timer}}</p>
+  <p>{{color}}</p>
+</div>
 </ion-content>
