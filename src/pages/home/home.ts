@@ -11,10 +11,13 @@ import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device
 
 export class HomePage {
   orientation: Orientation;
-  initial= new Orientation;
   model= new Orientation;
   color: string;
   timer: number;
+  ctx?: any;
+  x: number;
+  y: number;
+  lastPt?: any;
 
 
   constructor(public navCtrl: NavController, private deviceMotion: DeviceMotion) {
@@ -22,6 +25,34 @@ export class HomePage {
 
 
   }
+
+  canvasStart() {
+    let canvas = document.getElementById("gameSprite");
+    function draw(event) {
+      if(this.lastPt!=null) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.lastPt.x,this.lastPt.y);
+        this.ctx.LineTo(event.pageX, event.pageY);
+        this.ctx.stroke();
+      }
+      this.lastPt = {x:event.pageX, y:event.pageY}
+    }
+    function endPointer(event) {
+      canvas.removeEventListener("mousemove", draw, false)
+    }
+    // function getOffset(obj) {
+    //   const offsetLeft = 0;
+    //   const offsetTop = 0;
+    // }
+    // if(canvas.po)
+    canvas.addEventListener("mousedown", function() {
+      canvas.addEventListener("mousemove", draw, false);
+    }
+      , false)
+      canvas.addEventListener("mouseup", endPointer, false);
+  }
+
+
 
   getColor() {
     if (this.model.x <= 3 && this.model.y >= 6) {
@@ -36,6 +67,7 @@ export class HomePage {
     if( this.model.y >= 8 && this.model.z >=5) {
       this.color= "yellow";
     }
+    // need to figure out a simple way to say, "make the area that has less tilt then what is required to change colors, set color = black"
   }
 
   delay(milliseconds: number, count: number): Promise<number> {
@@ -55,6 +87,7 @@ export class HomePage {
 
   async colorSwapper() {
     this.startTimer();
+    this.canvasStart();
     for (let i = 0; i <= 360; i++) {
       this.getColor();
       await this.delay(250, i);
