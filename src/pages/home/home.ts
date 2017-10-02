@@ -14,7 +14,6 @@ export class HomePage {
   model= new Orientation;
   color: string;
   timer: number;
-  ctx?: any;
   x: number;
   y: number;
   lastPt?: any;
@@ -22,37 +21,56 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, private deviceMotion: DeviceMotion) {
     let subscription = this.deviceMotion.watchAcceleration().subscribe((acceleration: DeviceMotionAccelerationData) => { this.model = acceleration; });
-
+    //need to: figure out better offset, set bounds, color changing capbilities after initial method call, need to refine color checker
 
   }
 
   canvasStart() {
-    let canvas = document.getElementById("gameSprite");
+    let canvas: any = document.getElementById('gameSprite');
+    let ctx = canvas.getContext("2d");
+    let offset = getOffset(canvas);
+    let color = this.color;
+
+    if(this.color!= null) {
+      canvas.addEventListener("pointerdown", function() {
+        canvas.addEventListener("pointermove", draw, false);
+    }
+      , false)
+      canvas.addEventListener("pointerup", endPointer, false);
+    }
+
+    function endPointer(event) {
+     canvas.removeEventListener("pointermove", draw, false)
+     this.lastPt = null;
+    }
     function draw(event) {
       if(this.lastPt!=null) {
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.lastPt.x,this.lastPt.y);
-        this.ctx.LineTo(event.pageX, event.pageY);
-        this.ctx.stroke();
+        ctx.beginPath();
+        ctx.strokeStyle = color;
+        ctx.LineWidth = 5;
+        ctx.moveTo(this.lastPt.x,this.lastPt.y);
+        ctx.lineTo(event.pageX, event.pageY);
+        ctx.stroke();
       }
       this.lastPt = {x:event.pageX, y:event.pageY}
     }
-    function endPointer(event) {
-      canvas.removeEventListener("mousemove", draw, false)
+    function getOffset(obj) {
+      var offsetLeft = 0;
+      var offsetTop = 0;
+      do {
+        if (!isNaN(obj.offsetLeft)) {
+          offsetLeft += obj.offsetLeft;
+        }
+        if (!isNaN(obj.offsetTop)) {
+          offsetTop += obj.offsetTop;
+        }
+      } while(obj = obj.offsetParent );
+      return {left: offsetLeft, top: offsetTop};
     }
-    // function getOffset(obj) {
-    //   const offsetLeft = 0;
-    //   const offsetTop = 0;
-    // }
-    // if(canvas.po)
-    canvas.addEventListener("mousedown", function() {
-      canvas.addEventListener("mousemove", draw, false);
+    function clear() {
+      ctx.restore();
     }
-      , false)
-      canvas.addEventListener("mouseup", endPointer, false);
   }
-
-
 
   getColor() {
     if (this.model.x <= 3 && this.model.y >= 6) {
@@ -67,7 +85,9 @@ export class HomePage {
     if( this.model.y >= 8 && this.model.z >=5) {
       this.color= "yellow";
     }
-    // need to figure out a simple way to say, "make the area that has less tilt then what is required to change colors, set color = black"
+    // else {
+    //   this.color = "black";
+    // }
   }
 
   delay(milliseconds: number, count: number): Promise<number> {
@@ -86,13 +106,20 @@ export class HomePage {
   }
 
   async colorSwapper() {
+    var counter: number;
+    counter +1;
+    if(counter =1 ){
     this.startTimer();
-    this.canvasStart();
+    // this.canvasStart();
     for (let i = 0; i <= 360; i++) {
       this.getColor();
       await this.delay(250, i);
       this.getColor();
     }
+    // counter -1;
+  }
+  else {console.log("cannot run more than one game instance");}
+
   }
 
 }
