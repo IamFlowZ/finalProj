@@ -1,10 +1,14 @@
 #gameSprite {
   touch-action: none;
   display: block;
-  top: 50%;
   border: 1px solid black;
+  margin: 3em 2.5em 2.5em 1.25em;
 }
 
 #gameInfo {
   width: 100%;
+}
+
+#canvasBtn {
+  float: right;
 }
