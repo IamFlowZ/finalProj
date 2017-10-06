@@ -1,7 +1,6 @@
-import { subscribeToResult } from 'rxjs/util/subscribeToResult';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Orientation } from '../../app/app.orientation'
+import { Orientation, LineGen } from '../../app/app.orientation'
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
 
 @Component({
@@ -10,122 +9,42 @@ import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device
 })
 
 export class HomePage {
-  orientation: Orientation;
   model= new Orientation;
+  generator = new LineGen;
   color: string;
-  timer: number;
+  timer: number = 0;
   x: number;
   y: number;
-  lastPt?: any;
+
 
 
   constructor(public navCtrl: NavController, private deviceMotion: DeviceMotion) {
     const subscription = this.deviceMotion.watchAcceleration().subscribe((acceleration: DeviceMotionAccelerationData) => { this.model = acceleration; });
-    //need to: figure out better offset, set bounds, color changing capbilities after initial method call, need to refine color checker
+
 
   }
 
   canvasStart() {
-    let canvas: any = document.getElementById('gameSprite');
-    let ctx = canvas.getContext("2d");
-    let offset = getOffset(canvas);
-    const currentColor:string [] = ["red", "yellow", "blue", "green"];
-    let yourColor: string;
-    let theColor = this.color;
-    // this.draw("pointermove");
+    this.generator.canvas = document.getElementById('gameSprite');
+    this.generator.ctx = this.generator.canvas.getContext("2d");
+    this.generator.theColor = this.color;
 
     if(this.color != null) {
-      canvas.addEventListener("pointerdown", function() {
-        canvas.addEventListener("pointermove", draw, false);
-    }
-      , false)
-      canvas.addEventListener("pointerup", endPointer, false);
+      this.generator.canvas.addEventListener("pointerdown", this.generator.draw("pointermove"), false);
+      this.generator.canvas.addEventListener("pointerup", this.generator.endPointer("pointerup"), false);
     }
 
-    function endPointer(event) {
-     canvas.removeEventListener("pointermove", false)
-     this.lastPt = null;
-    }
-
-    async function colorChecker(color) {
-      for (var i = 0; i < currentColor.length-1; i++) {
-        if (color == currentColor[i]) {
-          yourColor = color;
-        }
-      }
-
-    }
-    function draw(event) {
-      if(this.lastPt!=null) {
-        colorChecker(theColor);
-        ctx.beginPath();
-        ctx.strokeStyle = yourColor;
-        ctx.LineWidth = 5;
-        ctx.moveTo(this.lastPt.x,this.lastPt.y);
-        ctx.lineTo(event.pageX-offset.left, event.pageY-offset.top);
-        ctx.stroke();
-      }
-      this.lastPt = {x:event.pageX-offset.left, y:event.pageY-offset.top}
-    }
-    function getOffset(obj) {
-      var offsetLeft = 0;
-      var offsetTop = 0;
-      do {
-        if (!isNaN(obj.offsetLeft)) {
-          offsetLeft += obj.offsetLeft;
-        }
-        if (!isNaN(obj.offsetTop)) {
-          offsetTop += obj.offsetTop;
-        }
-      } while(obj = obj.offsetParent );
-      return {left: offsetLeft, top: offsetTop};
-    }
     function clear() {
-      ctx.restore();
+      this.generator.ctx.restore();
+    }
+    function save() {
+      let image = this.generator.canvas.toDataURL("image/png");
+
     }
 
   }
 
-  // draw(event) {
-  //   let canvas: any;
-  //   let ctx: any;
-
-
-  //   if(this.lastPt!=null) {
-  //     colorChecker(theColor);
-  //     ctx.beginPath();
-  //     ctx.strokeStyle = yourColor;
-  //     ctx.LineWidth = 5;
-  //     ctx.moveTo(this.lastPt.x,this.lastPt.y);
-  //     ctx.lineTo(event.pageX-offset.left, event.pageY-offset.top);
-  //     ctx.stroke();
-  //   }
-  //   this.lastPt = {x:event.pageX-offset.left, y:event.pageY-offset.top}
-
-  //   function getOffset(obj) {
-  //     var offsetLeft = 0;
-  //     var offsetTop = 0;
-  //     do {
-  //       if (!isNaN(obj.offsetLeft)) {
-  //         offsetLeft += obj.offsetLeft;
-  //       }
-  //       if (!isNaN(obj.offsetTop)) {
-  //         offsetTop += obj.offsetTop;
-  //       }
-  //     } while(obj = obj.offsetParent );
-  //     return {left: offsetLeft, top: offsetTop};
-  //   }
-
-  //   function colorChecker(color) {
-  //     for (var i = 0; i < currentColor.length-1; i++) {
-  //       if (color == currentColor[i]) {
-  //         yourColor = color;
-  //       }
-  //     }
-
-  //   }
-
-  // }
+  //
 
 
   getColor() {
@@ -168,16 +87,11 @@ export class HomePage {
     // if( counter = 1 ){
 
     this.startTimer();
-
-    // this.canvasStart();
-    for (let i = 0; i <= 900; i++) {
+    for (let i = 0; i <= 9000; i++) {
       this.getColor();
-      await this.delay(100, i);
+      await this.delay(10, i);
       this.getColor();
     }
-
-
-
     // counter -1;
   }
   // else {console.log("cannot run more than one game instance");}
