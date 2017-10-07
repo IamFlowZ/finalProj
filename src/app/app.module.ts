@@ -7,11 +7,13 @@ import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { GamePage } from '../pages/game/game';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    GamePage
   ],
   imports: [
     BrowserModule,
@@ -20,7 +22,8 @@ import { HomePage } from '../pages/home/home';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    GamePage
   ],
   providers: [
     StatusBar,

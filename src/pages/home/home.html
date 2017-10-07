@@ -1,15 +1,3 @@
 <ion-content padding>
-<div id="gameWindow">
-  <div id="gameInfo">
-    <p>{{model.x}}</p>
-    <p>{{model.y}}</p>
-    <p>{{model.z}}</p>
-    <button (click)="colorSwapper()" class="btn" id="startBtn">colorSwapper</button>
-    <button (click)="canvasStart()" id="canvasBtn">canvasStart</button>
-    <p>:{{timer}}</p> <p>your color: {{generator.theColor}},  {{color}}</p>
-  </div>
-  <div>
-    <canvas id="gameSprite"></canvas>
-  </div>
-</div>
+<button ion-button [navPush]= pushPageGame >pushPageGame</button>
 </ion-content>
