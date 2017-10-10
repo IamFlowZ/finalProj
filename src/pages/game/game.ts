@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Orientation, LineGen } from '../../app/app.orientation'
-import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
+import { DeviceMotion, DeviceMotionAccelerationData, DeviceMotionAccelerometerOptions } from '@ionic-native/device-motion';
 
 @Component({
   selector: 'page-game',
@@ -18,8 +18,11 @@ export class GamePage {
 
 
 
+
   constructor(public navCtrl: NavController, private deviceMotion: DeviceMotion) {
-    const subscription = this.deviceMotion.watchAcceleration().subscribe((acceleration: DeviceMotionAccelerationData) => { this.model = acceleration; });
+    const options = { frequency: 100}
+    const subscription = this.deviceMotion.watchAcceleration(options).subscribe((acceleration: DeviceMotionAccelerationData) => { this.model = acceleration; this.generator.theColor = this.color; });
+
 
 
   }
@@ -27,11 +30,11 @@ export class GamePage {
   canvasStart() {
     this.generator.canvas = <HTMLCanvasElement>document.getElementById('gameSprite');
     this.generator.ctx = this.generator.canvas.getContext("2d");
-    this.generator.theColor = this.color;
+
 
     if(this.color != null) {
       this.generator.start("pointerdown");
-      this.generator.endPointer("pointerup");
+
     }
 
     function clear() {

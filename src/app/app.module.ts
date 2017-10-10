@@ -8,12 +8,14 @@ import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { GamePage } from '../pages/game/game';
+import { ScoringPage } from '../pages/scoring/scoring';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    GamePage
+    GamePage,
+    ScoringPage
   ],
   imports: [
     BrowserModule,
@@ -23,7 +25,8 @@ import { GamePage } from '../pages/game/game';
   entryComponents: [
     MyApp,
     HomePage,
-    GamePage
+    GamePage,
+    ScoringPage
   ],
   providers: [
     StatusBar,
