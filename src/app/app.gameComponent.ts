@@ -14,10 +14,11 @@ export class LineGen {
   public currentColor:string [] = ["yellow", "red", "blue", "green"];
 
 public start = (event) => {
-  this.canvas.onpointermove = this.draw;
+  this.canvas.addEventListener("pointerdown", () => this.draw, false)
+  // this.canvas.onpointerup = this.endPointer;
   this.ctx.fillStyle = "white";
   this.ctx.fillRect(0,0,325,350);
-  this.canvas.onpointerup = this.endPointer;
+
 }
 
 public draw = (event) => {
@@ -25,13 +26,16 @@ public draw = (event) => {
       if(this.lastPt != null) {
         this.ctx.beginPath();
         this.ctx.lineWidth = 3;
+        this.ctx.lineCap = "round";
         this.ctx.moveTo(this.lastPt.x, this.lastPt.y);
         this.ctx.lineTo(event.pageX-offset.left, event.pageY-offset.top);
         this.colorChecker(this.theColor);
         this.ctx.strokeStyle = this.yourColor;
         this.ctx.stroke();
+        this.ctx.closePath();
       }
       this.lastPt = {x:event.pageX-offset.left, y:event.pageY-offset.top}
+      // this.canvas.onpointerup = this.endPointer;
   }
 
   getOffset(obj) {
@@ -61,14 +65,13 @@ public draw = (event) => {
   }
 
   endPointer(event) {
-    // this.canvas.onpointerup =
-    if(this.lastPt != null){
-      this.lastPt = null;
-    }
+    this.lastPt = null;
+    this.ctx.closePath();
   }
 
   save() {
     this.canvas.toDataURL("image/png");
+
   }
 
   delay(milliseconds: number, count: number): Promise<number> {

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Orientation, LineGen } from '../../app/app.orientation'
+import { Orientation, LineGen } from '../../app/app.gamecomponent';
 import { DeviceMotion, DeviceMotionAccelerationData, DeviceMotionAccelerometerOptions } from '@ionic-native/device-motion';
+import { SocketService } from '../../app/app.socketService';
+// import { Socket } from '../../app/app.service';
 
 @Component({
   selector: 'page-game',
@@ -11,12 +13,14 @@ import { DeviceMotion, DeviceMotionAccelerationData, DeviceMotionAccelerometerOp
 export class GamePage {
   model= new Orientation;
   generator = new LineGen;
+  socket = new SocketService;
+  // socket = new Socket;
+  socketId: any;
+  // socketId: any;
   color: string;
   timer: number = 0;
   x: number;
   y: number;
-
-
 
 
   constructor(public navCtrl: NavController, private deviceMotion: DeviceMotion) {
@@ -25,16 +29,19 @@ export class GamePage {
 
 
 
+
   }
 
   canvasStart() {
     this.generator.canvas = <HTMLCanvasElement>document.getElementById('gameSprite');
     this.generator.ctx = this.generator.canvas.getContext("2d");
-
+    this.socket.connect();
+    // this.socket.onConnect();
 
     if(this.color != null) {
       this.generator.start("pointerdown");
-
+      this.generator.endPointer("pointerup");
+      // this.socket.send();
     }
 
     function clear() {

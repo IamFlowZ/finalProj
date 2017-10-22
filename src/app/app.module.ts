@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
 
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { GamePage } from '../pages/game/game';

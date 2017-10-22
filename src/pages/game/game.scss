@@ -1,8 +1,12 @@
+#gameWindow {
+  width: 100%;
+}
+
 #gameSprite {
   touch-action: none;
   display: block;
   border: 1px solid black;
-  margin: 3em 3em;
+  margin: 0;
 }
 
 #gameInfo {
