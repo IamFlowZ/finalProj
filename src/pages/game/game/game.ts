@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Orientation, LineGen } from '../../app/app.gamecomponent';
 import { DeviceMotion, DeviceMotionAccelerationData, DeviceMotionAccelerometerOptions } from '@ionic-native/device-motion';
-import { SocketService } from '../../app/app.socketService';
-// import { Socket } from '../../app/app.service';
+import { LineGen } from './components/gameComponent';
+import { Orientation } from './components/orientationTracker';
+import { LobbyService } from '../../../app/shared/app.server';
 
 @Component({
   selector: 'page-game',
@@ -13,18 +13,15 @@ import { SocketService } from '../../app/app.socketService';
 export class GamePage {
   model= new Orientation;
   generator = new LineGen;
-  socket = new SocketService;
-  // socket = new Socket;
-  socketId: any;
-  // socketId: any;
   color: string;
   timer: number = 0;
   x: number;
   y: number;
+  // lineId: number = 0;
 
 
   constructor(public navCtrl: NavController, private deviceMotion: DeviceMotion) {
-    const options = { frequency: 100}
+    var options = { frequency: 100}
     const subscription = this.deviceMotion.watchAcceleration(options).subscribe((acceleration: DeviceMotionAccelerationData) => { this.model = acceleration; this.generator.theColor = this.color; });
 
 
@@ -35,13 +32,11 @@ export class GamePage {
   canvasStart() {
     this.generator.canvas = <HTMLCanvasElement>document.getElementById('gameSprite');
     this.generator.ctx = this.generator.canvas.getContext("2d");
-    this.socket.connect();
-    // this.socket.onConnect();
-
     if(this.color != null) {
-      this.generator.start("pointerdown");
-      this.generator.endPointer("pointerup");
-      // this.socket.send();
+      this.generator.start();
+      this.generator.canvas.addEventListener("pointermove", () => this.generator.draw, false);
+      // this.generator.canvas.addEventListener("pointerup", () => this.generator.endPointer, false);
+
     }
 
     function clear() {
@@ -54,21 +49,15 @@ export class GamePage {
   }
 
   getColor() {
-    if (this.model.x <= 3 && this.model.y >= 6) {
-      this.color = "red";
-    }
-    if(this.model.x <= -2 && this.model.y >= 6) {
-      this.color = "blue";
-    }
-    if ( this.model.y >= 5 && this.model.z >= 8) {
-      this.color="green";
-    }
-    if( this.model.y >= 8 && this.model.z >=5) {
-      this.color= "yellow";
-    }
-    // else {
-    //   this.color = "black";
-    // }
+    if ( this.model.x <= 3 && this.model.y >= 6) { this.color = "red"; }
+
+    if ( this.model.x <= -2 && this.model.y >= 6) { this.color = "blue"; }
+
+    if ( this.model.y >= 5 && this.model.z >= 8) { this.color="green"; }
+
+    if ( this.model.y >= 8 && this.model.z >=5) { this.color= "yellow"; }
+
+    else { this.color = "black";}
   }
 
   delay(milliseconds: number, count: number): Promise<number> {
@@ -87,24 +76,12 @@ export class GamePage {
   }
 
   async colorSwapper() {
-    //Idea I had for limiting the number of instances that can be ran at once.
-    // var counter: number;
-    // counter +1;
-    // if( counter = 1 ){
-
     this.startTimer();
     for (let i = 0; i <= 900; i++) {
       this.getColor();
       await this.delay(100, i);
       this.getColor();
     }
-    // counter -1;
   }
-  // else {console.log("cannot run more than one game instance");}
 
 }
-
-
-
-
-

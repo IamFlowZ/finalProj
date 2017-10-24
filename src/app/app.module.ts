@@ -1,3 +1,4 @@
+import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -7,19 +8,26 @@ import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device
 
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { GamePage } from '../pages/game/game';
-import { ScoringPage } from '../pages/scoring/scoring';
+import { HomePage } from '../pages/home/lobby/lobby';
+import { GamePage } from '../pages/game/game/game';
+import { ScoringPage } from '../pages/game/scoring/scoring';
+import { Login } from '../pages/home/login/login';
+import { LobbyCreate } from '../pages/create/lobby/lobbyCreate';
+import { UserCreate } from '../pages/create/user/userCreate';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     GamePage,
-    ScoringPage
+    ScoringPage,
+    Login,
+    LobbyCreate,
+    UserCreate
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -27,7 +35,8 @@ import { ScoringPage } from '../pages/scoring/scoring';
     MyApp,
     HomePage,
     GamePage,
-    ScoringPage
+    ScoringPage,
+    Login
   ],
   providers: [
     StatusBar,

@@ -1,0 +1,26 @@
+<ion-content padding>
+<div class="container">
+  <h1>Login</h1>
+  <div>
+    <form #Login>
+      <table id="loginTemplate">
+        <tbody>
+          <tr>
+            <td><input type="text" class="form-control" placeholder="Username: " ></td>
+          </tr>
+          <tr>
+            <td><input type="text" class="form-control" placeholder="Password: " ></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="failedLogin" style="visibility: hidden">
+        <p>Username or password is incorrect.</p>
+      </div>
+      <button type="submit" class="btn" (click)="userLogin(user.username)">Login</button>
+    </form>
+  </div>
+
+</div>
+
+
+</ion-content>
