@@ -53,11 +53,11 @@ export class GamePage {
 
     if ( this.model.x <= -2 && this.model.y >= 6) { this.color = "blue"; }
 
-    if ( this.model.y >= 5 && this.model.z >= 8) { this.color="green"; }
+    if ( this.model.y >= 5 && this.model.z >= 8) { this.color = "green"; }
 
-    if ( this.model.y >= 8 && this.model.z >=5) { this.color= "yellow"; }
+    if ( this.model.y >= 8 && this.model.z >=5) { this.color = "yellow"; }
 
-    else { this.color = "black";}
+    // else { this.color = "black";}
   }
 
   delay(milliseconds: number, count: number): Promise<number> {

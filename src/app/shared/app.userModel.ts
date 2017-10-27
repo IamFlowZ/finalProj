@@ -1,7 +1,7 @@
 export class User {
-  userName: string;
-  userId: number;
+  // userName: string;
+  userId: any;
   lobbyId?: number[];
   lobbyScore?: number[];
-  images?: string[];
+  // images?: string[];
 }

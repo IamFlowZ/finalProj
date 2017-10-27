@@ -1,28 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { UserLogin } from './app.userLogin';
 import { User } from './app.userModel';
 
-const url = "http://localhost:3000/api/users";
 
 @Injectable()
 export class LobbyService {
+private userUrl = "http://localhost:3000/api/users";
+private lobbyUrl = "http://localhost:3000/api/lobbies";
+private headers = new Headers ({ 'Content-type': 'application/json'});
 
   constructor(private http: Http) {
 
   }
 
-  getLobby(): Promise<User[]> {
-    return this.http.get(url).toPromise()
-    .then(response => response.json().data as User[])
-    .catch(this.handleError);
+  getLobby(id: number) {
+    var lobbyURL = this.lobbyUrl + "/" + id;
+    return this.http.get(lobbyURL)
+    .subscribe(response => response.json().data as User,
+    err => {this.handleError}
+    );
   }
 
-  submitUser(username: string): Promise<User> {
-    return this.http.get(url + '/' + username).toPromise()
-    .then(response => response.json().data as User)
-    .catch(this.handleError);
+  submitUser(username: string) {
+    var userURL = this.userUrl + "/" + username;
+    return this.http.get(userURL)
+      .subscribe(response => response.json().data as User,
+      err => {this.handleError}
+    );
+
   }
 
   private handleError(error: any): Promise<any> {

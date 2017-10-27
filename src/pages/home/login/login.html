@@ -6,20 +6,20 @@
       <table id="loginTemplate">
         <tbody>
           <tr>
-            <td><input type="text" class="form-control" placeholder="Username: " ></td>
+            <td><input type="text" class="form-control" placeholder="Username: " [(ngModel)] = "user" name="username"></td>
           </tr>
           <tr>
             <td><input type="text" class="form-control" placeholder="Password: " ></td>
           </tr>
         </tbody>
       </table>
-      <div class="failedLogin" style="visibility: hidden">
-        <p>Username or password is incorrect.</p>
+      <div class="failedLogin">
       </div>
-      <button type="submit" class="btn" (click)="userLogin(user.username)">Login</button>
+      <button ion-button type="submit" class="btn" (click)="userLogin(user.username)">Login</button>
     </form>
   </div>
-
+  <button ion-button [navPush]=pushPageGame>Game</button>
+  <button ion-button [navPush]=pushPageLobby>Lobby</button>
 </div>
 
 
