@@ -1,38 +1,34 @@
 export class LineGen {
   public canvas: HTMLCanvasElement;
   public ctx: CanvasRenderingContext2D;
-  public firstPt?: any;
   public lastPt?: any;
   public yourColor: string;
   public theColor: string;
   public currentColor:string [] = ["yellow", "red", "blue", "green"];
-  public lineId: number = 0;
+  public lineId: number[];
 
 public start = () => {
-  // this.canvas.addEventListener("pointermove", () => this.draw, false);
-  // this.canvas.onpointermove = this.draw;
-  // this.canvas.onpointerup = this.endPointer;
+  this.canvas.addEventListener("pointerdown", this.newLine, false);
+  this.canvas.addEventListener("pointerup", this.endPointer, false);
   this.ctx.fillStyle = "white";
   this.ctx.fillRect(0,0,325,350);
 
 }
 
-  public draw = (event) => {
-    let offset = this.getOffset(this.canvas);
+public draw = (event) => {
+  let offset = this.getOffset(this.canvas);
+    if(this.lastPt != null) {
+      this.ctx.beginPath();
+      this.ctx.lineWidth = 3;
+      this.ctx.lineCap = "round";
+      this.ctx.moveTo(this.lastPt.x, this.lastPt.y);
+      this.ctx.lineTo(event.pageX-offset.left, event.pageY-offset.top);
+      this.ctx.strokeStyle = this.theColor;
+      this.ctx.stroke();
+      this.ctx.save();
+    }
+    this.lastPt = {x:event.pageX-offset.left, y:event.pageY-offset.top}
 
-      if(this.lastPt != null) {
-        this.ctx.beginPath();
-        this.ctx.lineWidth = 3;
-        this.ctx.lineCap = "round";
-        this.ctx.moveTo(this.lastPt.x, this.lastPt.y);
-        this.ctx.lineTo(event.pageX-offset.left, event.pageY-offset.top);
-        this.colorChecker(this.theColor);
-        this.ctx.strokeStyle = this.yourColor;
-        this.ctx.stroke();
-        this.ctx.closePath();
-      }
-      this.lastPt = {x:event.pageX-offset.left, y:event.pageY-offset.top}
-      // this.canvas.addEventListener("pointerup", this.ctx.closePath(), false);
 
   }
 
@@ -50,22 +46,23 @@ public start = () => {
     return {left: offsetLeft, top: offsetTop};
   }
 
-  colorChecker(color) {
-    for (var i = 0; i < this.currentColor.length-1; i++) {
-      if (color == this.currentColor[i]) {
-        this.yourColor = color;
-      }
-    }
+  endPointer = (event) => {
+    this.canvas.removeEventListener("pointermove", this.draw, false);
+
+    delete this.lastPt;
   }
 
-  endPointer() {
-    this.lastPt = null;
-
+  newLine = (event) => {
+    this.canvas.addEventListener("pointermove", this.draw, false);
   }
 
   save() {
     this.canvas.toDataURL("image/png");
 
   }
+
+  // undo() {
+  //   this.ctx.restore();
+  // }
 
 }

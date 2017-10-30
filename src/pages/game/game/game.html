@@ -1,12 +1,13 @@
 <ion-content padding>
 <div id="gameWindow">
   <div id="gameInfo">
-    <p>{{model.x}}</p>
+    <!-- <p>{{model.x}}</p>
     <p>{{model.y}}</p>
-    <p>{{model.z}}</p>
+    <p>{{model.z}}</p> -->
+
     <button ion-button (click)="colorSwapper()" id="startBtn">colorSwapper</button>
     <button ion-button (click)="canvasStart()" id="canvasBtn">canvasStart</button>
-    <p>:{{timer}}</p> <p>your color: {{generator.theColor}},  {{color}}</p>
+    <p>:{{timer}}</p> <p>your color: {{color}}</p><button (click)="undo()" id="undoBtn">undo</button>
   </div>
   <div>
     <canvas id="gameSprite" height="350" width="325"></canvas>

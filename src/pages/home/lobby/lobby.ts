@@ -14,8 +14,9 @@ import { LobbyService } from '../../../app/shared/app.server';
 
 export class HomePage {
   pushPageGame: any;
-  user: User;
+  user: any;
   backupUser : BackupUser;
+  message: any;
 
   constructor(
     public navCtrl: NavController,
@@ -23,13 +24,18 @@ export class HomePage {
     private lobbyService: LobbyService ) {
     this.pushPageGame = GamePage;
     this.user = this.navParams.get('user');
-
+      if(this.user != null) {
+        this.message = this.user;
+      }
+      else {this.message = "user call didn't work";}
   }
 
+
+  //needs work
   getLobbies() {
     var lobbies = this.user.lobbyId;
-    lobbies.forEach(element => {
-      this.lobbyService.getLobby(element);
+    lobbies.forEach(userId => {
+      this.lobbyService.getLobby(userId);
     });
   }
 

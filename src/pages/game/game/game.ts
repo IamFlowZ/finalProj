@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import { DeviceMotion, DeviceMotionAccelerationData, DeviceMotionAccelerometerOptions } from '@ionic-native/device-motion';
 import { LineGen } from './components/gameComponent';
 import { Orientation } from './components/orientationTracker';
-import { LobbyService } from '../../../app/shared/app.server';
+// import { LobbyService } from '../../../app/shared/app.server';
 
 @Component({
   selector: 'page-game',
@@ -17,14 +17,10 @@ export class GamePage {
   timer: number = 0;
   x: number;
   y: number;
-  // lineId: number = 0;
-
 
   constructor(public navCtrl: NavController, private deviceMotion: DeviceMotion) {
-    var options = { frequency: 100}
+    var options = { frequency: 100 };
     const subscription = this.deviceMotion.watchAcceleration(options).subscribe((acceleration: DeviceMotionAccelerationData) => { this.model = acceleration; this.generator.theColor = this.color; });
-
-
 
 
   }
@@ -32,32 +28,27 @@ export class GamePage {
   canvasStart() {
     this.generator.canvas = <HTMLCanvasElement>document.getElementById('gameSprite');
     this.generator.ctx = this.generator.canvas.getContext("2d");
-    if(this.color != null) {
+    if(window.event) {
       this.generator.start();
-      this.generator.canvas.addEventListener("pointermove", () => this.generator.draw, false);
-      // this.generator.canvas.addEventListener("pointerup", () => this.generator.endPointer, false);
-
     }
 
-    function clear() {
-      this.generator.ctx.restore();
-    }
   }
 
-  save() {
-    this.generator.save();
+  undo() {
+    this.generator.ctx.restore();
   }
 
   getColor() {
-    if ( this.model.x <= 3 && this.model.y >= 6) { this.color = "red"; }
+    if ( this.model.x > 6) { this.color = "red"; }
 
-    if ( this.model.x <= -2 && this.model.y >= 6) { this.color = "blue"; }
+    if ( this.model.x < -6) { this.color = "blue"; }
 
-    if ( this.model.y >= 5 && this.model.z >= 8) { this.color = "green"; }
+    if ( this.model.y > 9) { this.color = "green"; }
 
-    if ( this.model.y >= 8 && this.model.z >=5) { this.color = "yellow"; }
+    if ( this.model.y < 0) { this.color = "yellow"; }
 
-    // else { this.color = "black";}
+    //if all values are between those......
+    if ( this.model.x < 6 && this.model.x > -6 && this.model.y < 9 && this.model.y > 0) { this.color = "black"; }
   }
 
   delay(milliseconds: number, count: number): Promise<number> {

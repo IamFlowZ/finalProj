@@ -23,7 +23,7 @@ private headers = new Headers ({ 'Content-type': 'application/json'});
     );
   }
 
-  submitUser(username: string) {
+  userLogin(username: string) {
     var userURL = this.userUrl + "/" + username;
     return this.http.get(userURL)
       .subscribe(response => response.json().data as User,

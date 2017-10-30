@@ -33,19 +33,14 @@ export class Login {
 
 
   userLogin() {
-    this.lobbyService.submitUser(this.user.username);
+    this.lobbyService.userLogin(this.user.username);
     if (this.loggedUser != null) {
       this.navCtrl.push(HomePage, {'user': this.loggedUser});
     }
     else  {
-      this.handleError;
+      this.navCtrl.push(HomePage, {'user': this.backupUser});
     }
 
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('error occured: ', error);
-    return Promise.reject(error.message || error);
   }
 
 }
