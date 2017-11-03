@@ -17,10 +17,12 @@ export class GamePage {
   timer: number = 0;
   x: number;
   y: number;
+  lineWidth: number = 3;
 
   constructor(public navCtrl: NavController, private deviceMotion: DeviceMotion) {
     var options = { frequency: 100 };
-    const subscription = this.deviceMotion.watchAcceleration(options).subscribe((acceleration: DeviceMotionAccelerationData) => { this.model = acceleration; this.generator.theColor = this.color; });
+    const subscription = this.deviceMotion.watchAcceleration(options).subscribe((acceleration: DeviceMotionAccelerationData) =>
+    { this.model = acceleration; this.generator.theColor = this.color; this.generator.lineWidth = this.lineWidth;});
 
 
   }
@@ -68,6 +70,7 @@ export class GamePage {
 
   async colorSwapper() {
     this.startTimer();
+    this.canvasStart();
     for (let i = 0; i <= 900; i++) {
       this.getColor();
       await this.delay(100, i);

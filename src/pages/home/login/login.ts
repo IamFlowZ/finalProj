@@ -8,7 +8,7 @@ import { LobbyService } from '../../../app/shared/app.server';
 import { User } from '../../../app/shared/app.userModel';
 import { HomePage } from '../lobby/lobby';
 import { GamePage } from '../../game/game/game';
-import { BackupUser } from '../../../app/shared/app.backupUser'
+import { UserCreate } from '../../create/user/userCreate';
 
 @Component({
   selector: 'page-login',
@@ -18,29 +18,33 @@ import { BackupUser } from '../../../app/shared/app.backupUser'
 
 
 export class Login {
-  user: UserLogin;
-  loggedUser: User;
+  model: any = {};
   pushPageLobby: any;
   pushPageGame: any;
-  backupUser: BackupUser;
+  pushPageRegister: any;
 
   constructor(
     public navCtrl: NavController,
     private lobbyService: LobbyService) {
     this.pushPageGame = GamePage;
     this.pushPageLobby = HomePage;
+    this.pushPageRegister = UserCreate;
   }
 
 
   userLogin() {
-    this.lobbyService.userLogin(this.user.username);
-    if (this.loggedUser != null) {
-      this.navCtrl.push(HomePage, {'user': this.loggedUser});
-    }
-    else  {
-      this.navCtrl.push(HomePage, {'user': this.backupUser});
-    }
+    this.lobbyService.userLogin(this.model.username).subscribe(data => { this.navCtrl.push(HomePage, {currentUser: data});}, error => this.handleError);
+    // if (this.loggedUser != null) {
+      // this.navCtrl.push(HomePage, {currentUser: this.loggedUser});
+    // }
+    // else  {
+    //   this.navCtrl.push(HomePage, {'user': this.backupUser});
+    // }
+
 
   }
-
+  private handleError(error: any): Promise<any> {
+    console.error('error occured: ', error);
+    return Promise.reject(error.message || error);
+  }
 }

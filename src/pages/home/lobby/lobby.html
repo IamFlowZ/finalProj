@@ -3,6 +3,13 @@
     <button ion-button [navPush]= pushPageGame id="startButton">Start!</button>
   </div>
   <div>
-    {{message}}
+    <ul>
+      <li *ngFor="let lobby of lobbies">
+        {{lobbyId}}
+      </li>
+    </ul>
+  </div>
+  <div>
+    <button ion-button [navPush]= pushpageLobbyCreate id="createButton">Create A Lobby!</button>
   </div>
 </ion-content>

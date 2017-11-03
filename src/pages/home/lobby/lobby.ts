@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { GamePage } from '../../game/game/game';
 
 import { User } from '../../../app/shared/app.userModel';
-import { BackupUser } from '../../../app/shared/app.backupUser';
+import { LobbyCreate } from '../../create/lobby/lobbyCreate';
 import { LobbyService } from '../../../app/shared/app.server';
 
 @Component({
@@ -14,8 +14,8 @@ import { LobbyService } from '../../../app/shared/app.server';
 
 export class HomePage {
   pushPageGame: any;
-  user: any;
-  backupUser : BackupUser;
+  pushpageLobbyCreate: any;
+  user: User;
   message: any;
 
   constructor(
@@ -23,20 +23,20 @@ export class HomePage {
     public navParams: NavParams,
     private lobbyService: LobbyService ) {
     this.pushPageGame = GamePage;
-    this.user = this.navParams.get('user');
-      if(this.user != null) {
-        this.message = this.user;
-      }
-      else {this.message = "user call didn't work";}
+    this.pushpageLobbyCreate = LobbyCreate;
+
+    //not so sure about this
+    const currentUser = navParams.get('user');
+
   }
 
 
   //needs work
-  getLobbies() {
-    var lobbies = this.user.lobbyId;
-    lobbies.forEach(userId => {
-      this.lobbyService.getLobby(userId);
-    });
-  }
+  // getLobbies() {
+  //   var lobbies = this.user.lobbyId;
+  //   lobbies.forEach(userId => {
+  //     this.lobbyService.getLobby(userId);
+  //   });
+  // }
 
 }

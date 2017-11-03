@@ -2,16 +2,16 @@ export class LineGen {
   public canvas: HTMLCanvasElement;
   public ctx: CanvasRenderingContext2D;
   public lastPt?: any;
-  public yourColor: string;
   public theColor: string;
-  public currentColor:string [] = ["yellow", "red", "blue", "green"];
-  public lineId: number[];
+  public lineWidth: number;
 
 public start = () => {
   this.canvas.addEventListener("pointerdown", this.newLine, false);
   this.canvas.addEventListener("pointerup", this.endPointer, false);
   this.ctx.fillStyle = "white";
   this.ctx.fillRect(0,0,325,350);
+  this.ctx.lineWidth = this.lineWidth;
+  this.ctx.lineCap = "round";
 
 }
 
@@ -19,8 +19,6 @@ public draw = (event) => {
   let offset = this.getOffset(this.canvas);
     if(this.lastPt != null) {
       this.ctx.beginPath();
-      this.ctx.lineWidth = 3;
-      this.ctx.lineCap = "round";
       this.ctx.moveTo(this.lastPt.x, this.lastPt.y);
       this.ctx.lineTo(event.pageX-offset.left, event.pageY-offset.top);
       this.ctx.strokeStyle = this.theColor;
@@ -28,8 +26,6 @@ public draw = (event) => {
       this.ctx.save();
     }
     this.lastPt = {x:event.pageX-offset.left, y:event.pageY-offset.top}
-
-
   }
 
   getOffset(obj) {

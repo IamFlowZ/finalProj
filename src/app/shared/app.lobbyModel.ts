@@ -1,6 +1,5 @@
-import { User } from './app.userModel';
-
 export class Lobby {
-  public Users: User[];
-
+  public Users: number[];
+  public gameTimer: number;
+  public prompts: string[];
 }
