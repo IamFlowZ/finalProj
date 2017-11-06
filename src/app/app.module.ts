@@ -36,7 +36,9 @@ import { UserCreate } from '../pages/create/user/userCreate';
     HomePage,
     GamePage,
     ScoringPage,
-    Login
+    Login,
+    LobbyCreate,
+    UserCreate
   ],
   providers: [
     StatusBar,

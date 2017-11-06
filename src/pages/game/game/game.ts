@@ -11,22 +11,26 @@ import { Orientation } from './components/orientationTracker';
 })
 
 export class GamePage {
-  model= new Orientation;
+  model = new Orientation;
   generator = new LineGen;
   color: string;
   timer: number = 0;
   x: number;
   y: number;
-  lineWidth: number = 3;
+  lineWidth: number;
 
   constructor(public navCtrl: NavController, private deviceMotion: DeviceMotion) {
     var options = { frequency: 100 };
-    const subscription = this.deviceMotion.watchAcceleration(options).subscribe((acceleration: DeviceMotionAccelerationData) =>
-    { this.model = acceleration; this.generator.theColor = this.color; this.generator.lineWidth = this.lineWidth;});
+
+    const subscription = this.deviceMotion.watchAcceleration(options)
+      .subscribe((acceleration: DeviceMotionAccelerationData) =>
+        { this.model = acceleration; this.generator.theColor = this.color; }
+    );
 
 
   }
 
+  //sets the canvas properties
   canvasStart() {
     this.generator.canvas = <HTMLCanvasElement>document.getElementById('gameSprite');
     this.generator.ctx = this.generator.canvas.getContext("2d");
@@ -53,6 +57,11 @@ export class GamePage {
     if ( this.model.x < 6 && this.model.x > -6 && this.model.y < 9 && this.model.y > 0) { this.color = "black"; }
   }
 
+  getWidth() {
+    this.generator.ctx.lineWidth = this.lineWidth;
+  }
+
+  //logic for the timer
   delay(milliseconds: number, count: number): Promise<number> {
       return new Promise<number>(resolve => {
               setTimeout(() => {
@@ -62,19 +71,24 @@ export class GamePage {
   }
 
   async startTimer() {
-    for (let i = 0; i <=90; i++) {
+    for (let i = 0; i <=30; i++) {
       const timer = await this.delay(1000, i);
       this.timer = timer;
     }
   }
 
-  async colorSwapper() {
+  //starts the game and recursively checks certain properties
+  async startGame() {
     this.startTimer();
     this.canvasStart();
-    for (let i = 0; i <= 900; i++) {
+    for (let i = 0; i <= 300; i++) {
+      this.generator.ctx.save();
       this.getColor();
+      this.getWidth();
       await this.delay(100, i);
+      this.generator.ctx.save();
       this.getColor();
+      this.getWidth();
     }
   }
 

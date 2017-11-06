@@ -10,7 +10,7 @@ public start = () => {
   this.canvas.addEventListener("pointerup", this.endPointer, false);
   this.ctx.fillStyle = "white";
   this.ctx.fillRect(0,0,325,350);
-  this.ctx.lineWidth = this.lineWidth;
+  // this.ctx.lineWidth = this.lineWidth;
   this.ctx.lineCap = "round";
 
 }

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Lobby } from '../../../app/shared/app.lobbyModel'
+import { Lobby } from '../../../app/models/lobbyModel'
 import { LobbyService } from '../../../app/shared/app.server'
 
 @Component({
   selector: 'page-create-lobby',
-  templateUrl: 'lobbyCreate.html'
+  templateUrl: 'lobbyCreate.html',
+  providers: [LobbyService]
 })
 
 

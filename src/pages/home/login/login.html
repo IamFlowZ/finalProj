@@ -2,7 +2,7 @@
 <div class="container">
   <h1>Login</h1>
   <div>
-    <form name="form" #Login (ngSubmit) = "userLogin()">
+    <form name="form" #Login (ngSubmit)="userLogin()">
       <table id="loginTemplate">
         <tbody>
           <tr>
@@ -13,9 +13,8 @@
           </tr>
         </tbody>
       </table>
-      <div class="failedLogin"></div>
-      <button ion-button type="submit" class="btn btn-primary">Login</button>
-      <button ion button [navPush]=pushPageRegister class="btn">Register</button>
+      <button ion-button type="submit">Login</button>
+      <button ion button [navPush]=pushPageRegister>Register</button>
     </form>
   </div>
   <!-- <p>{{}}</p> -->

@@ -1,0 +1,24 @@
+<ion-content padding>
+  <div id="pageHead">
+    <h1>Who are you?</h1>
+  </div>
+  <div id="form">
+    <form name="form" #UserCreate (ngSubmit)="createUser()">
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <input type="text" class="form-control" placeholder="Username: " [(ngModel)] ="model.username" name="username">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" class="form-control" placeholder="Password: " [(ngModel)] ="model.password" name="password">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button ion-button type="submit">Submit</button>
+    </form>
+  </div>
+</ion-content>

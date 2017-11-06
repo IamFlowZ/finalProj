@@ -1,7 +1,9 @@
+import { isSuccess } from '@angular/http/src/http_utils';
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { UserLogin } from './app.userLogin';
-import { User } from './app.userModel';
+import { UserLogin } from '../models/userLogin';
+import { Lobby } from '../models/lobbyModel';
+import { User } from '../models/userModel';
 import 'rxjs/add/operator/toPromise';
 
 
@@ -10,6 +12,8 @@ export class LobbyService {
 private userUrl = "http://localhost:3000/api/users";
 private lobbyUrl = "http://localhost:3000/api/lobbies";
 private headers = new Headers ({ 'Content-type': 'application/json'});
+lobby: Lobby;
+user: User;
 
   constructor(private http: Http) {
 
@@ -18,28 +22,29 @@ private headers = new Headers ({ 'Content-type': 'application/json'});
   getLobby(id: number) {
     var lobbyURL = this.lobbyUrl + "/" + id;
     return this.http.get(lobbyURL)
-    .subscribe(response => response.json().data as User,
-    err => {this.handleError}
-    );
+    .map((response: Response) => response.json().data as Lobby);
+    // err => {this.handleError}
   }
 
   userLogin(username: string) {
     var userURL = this.userUrl + "/" + username;
     return this.http.get(userURL)
-      .map(response => response.json().data as User,
-      err => {this.handleError}
+      .map((response: Response) => response.json() as User,
+      // err => {this.handleError}
     );
-
   }
 
-// userLogin(username: string): Promise<User> {
-//     var userURL = this.userUrl + "/" + username;
-//     return this.http.get(userURL)
-//     .toPromise()
-//     .then(response => response.json().data as User)
-//     .catch(this.handleError);
+  postLobby(user: number[], prompts: string[], timer: number) {
+    this.lobby.Users = user;
+    this.lobby.prompts = prompts;
+    this.lobby.gameTimer = timer;
+    this.http.post(this.lobbyUrl, this.lobby);
+  }
 
-// }
+  postUser(userId: number) {
+    this.user.userId = userId;
+    this.http.post(this.userUrl, this.user);
+  }
 
   private handleError(error: any): Promise<any> {
     console.error('error occured: ', error);
