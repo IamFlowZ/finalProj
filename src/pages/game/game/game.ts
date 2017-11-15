@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import { DeviceMotion, DeviceMotionAccelerationData, DeviceMotionAccelerometerOptions } from '@ionic-native/device-motion';
 import { LineGen } from './components/gameComponent';
 import { Orientation } from './components/orientationTracker';
-// import { LobbyService } from '../../../app/shared/app.server';
+// import { LobbyService } from '../../../app/shared/app.userService';
 
 @Component({
   selector: 'page-game',

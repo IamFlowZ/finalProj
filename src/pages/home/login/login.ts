@@ -4,11 +4,12 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
 import { UserLogin } from '../../../app/models/userLogin';
-import { LobbyService } from '../../../app/shared/app.server';
+import { LobbyService } from '../../../app/shared/app.userService';
 import { User } from '../../../app/models/userModel';
 import { HomePage } from '../lobby/lobby';
 import { GamePage } from '../../game/game/game';
 import { UserCreate } from '../../create/user/userCreate';
+
 
 @Component({
   selector: 'page-login',
@@ -22,6 +23,7 @@ export class Login {
   pushPageLobby: any;
   pushPageGame: any;
   pushPageRegister: any;
+  user: User;
 
   constructor(
     public navCtrl: NavController,
@@ -33,8 +35,12 @@ export class Login {
 
 
   userLogin() {
-    this.lobbyService.userLogin(this.model.username)
-      .subscribe(data => {console.log(data)});
+    this.lobbyService.userLogin(this.model.username);
+
+      // .subscribe(data => {
+        // JSON.stringify(data);
+        // console.log(data);
+      // });
       //   // JSON.stringify(data);
       //   this.navCtrl.push(HomePage, {currentUser: data}); });
       // this.navCtrl.push(HomePage, {currentUser: data});},
@@ -42,9 +48,5 @@ export class Login {
 
 
 
-  }
-  private handleError(error: any): Promise<any> {
-    console.error('error occured: ', error);
-    return Promise.reject(error.message || error);
   }
 }

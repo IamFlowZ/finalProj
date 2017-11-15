@@ -3,17 +3,15 @@
     Not even close to done!
   </h1>
   <div>
-    <button ion-button [navPush]=pushPageGame id="startButton">Start!</button>
-  </div>
-  <div>
-    <p>{{lobbyDisplay}}</p>
-    <!-- <ul>
+    <button (click)="getLobbies()"></button>
+    <ul>
       <li *ngFor="let lobby of lobbies">
-        {{lobbyId}}
+        {{lobbyDisplay.Users}}
+        <button ion-button [navPush]=pushPageGame id="startButton">Start!</button>
       </li>
-    </ul> -->
+    </ul>
   </div>
   <div>
-    <button ion-button [navPush]=pushpageLobbyCreate id="createButton">Create A Lobby!</button>
+    <button ion-button [navPush]=pushPageLobbyCreate id="createButton">Create A Lobby!</button>
   </div>
 </ion-content>

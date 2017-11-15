@@ -5,9 +5,10 @@ import { Observable } from 'rxjs/Rx';
 
 import { User } from '../../../app/models/userModel';
 import { LobbyCreate } from '../../create/lobby/lobbyCreate';
-import { LobbyService } from '../../../app/shared/app.server';
+import { LobbyService } from '../../../app/shared/app.userService';
 import { BackupUser } from '../../../app/shared/backupUers';
 import { LobbyModel } from '../../../app/models/lobbyDisplay';
+import { Lobby } from '../../../app/models/lobbyModel';
 
 @Component({
   selector: 'page-home',
@@ -17,11 +18,11 @@ import { LobbyModel } from '../../../app/models/lobbyDisplay';
 
 export class HomePage {
   pushPageGame: any;
-  pushpageLobbyCreate: any;
+  pushPageLobbyCreate: any;
   user: User;
-  lobbyDisplay = new LobbyModel;
+  lobbyDisplay = new Lobby;
   message: any;
-  lobbies: any;
+  // lobbies: any;
 
   constructor(
     public navCtrl: NavController,
@@ -29,19 +30,24 @@ export class HomePage {
     private lobbyService: LobbyService,
     private backupUser: BackupUser ) {
     this.pushPageGame = GamePage;
-    this.pushpageLobbyCreate = LobbyCreate;
-    this.user = this.backupUser;
+    this.pushPageLobbyCreate = LobbyCreate;
+
 
     //not so sure about this
     // const currentUser = navParams.get('user');
 
   }
 
+  ngOnInit() {
+
+    this.getLobbies();
+  }
 
   //needs work
   getLobbies() {
-    this.lobbies = this.user.lobbyId;
-    this.lobbies.forEach(lobbyId => {
+    this.user = this.backupUser;
+    const lobbies = this.user.lobbyId;
+    lobbies.forEach(lobbyId => {
       this.lobbyService.getLobby(lobbyId)
       .subscribe((response) => {
         this.lobbyDisplay = response;

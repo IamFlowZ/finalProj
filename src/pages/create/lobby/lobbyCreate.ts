@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Lobby } from '../../../app/models/lobbyModel'
-import { LobbyService } from '../../../app/shared/app.server'
+import { LobbyService } from '../../../app/shared/app.userService'
 
 @Component({
   selector: 'page-create-lobby',

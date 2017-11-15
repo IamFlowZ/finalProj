@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { LobbyService } from '../../../app/shared/app.server';
+import { LobbyService } from '../../../app/shared/app.userService';
 
 import { HomePage } from '../../home/lobby/lobby';
 import { GamePage } from '../../game/game/game';
