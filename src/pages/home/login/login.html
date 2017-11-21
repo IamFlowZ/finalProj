@@ -1,6 +1,6 @@
 <ion-content padding>
-<div class="container">
-  <h1>Login</h1>
+<div id="container" >
+  <h1>Login:</h1>
   <div>
     <form name="form" #Login (ngSubmit)="userLogin()">
       <table id="loginTemplate">
@@ -13,13 +13,17 @@
           </tr>
         </tbody>
       </table>
-      <button ion-button type="submit">Login</button>
-      <button ion button [navPush]=pushPageRegister>Register</button>
+      <tfoot>
+        <button ion-button type="submit">Login</button>
+        <button ion-button [navPush]=pushPageRegister>Register</button>
+      </tfoot>
     </form>
   </div>
-  <p>{{user}}</p>
-  <button ion-button [navPush]=pushPageGame>Game</button>
-  <button ion-button [navPush]=pushPageLobby>Lobby</button>
+  <div id="devStuff">
+    <p>{{user}}</p>
+    <button ion-button [navPush]=pushPageGame>Game</button>
+    <button ion-button [navPush]=pushPageLobby>Lobby</button>
+  </div>
 </div>
 
 

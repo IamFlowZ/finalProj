@@ -44,6 +44,7 @@ export class GamePage {
     this.generator.ctx.restore();
   }
 
+  //function that allows the user to change the color by tilting the device
   getColor() {
     if ( this.model.x > 6) { this.color = "red"; }
 
@@ -57,6 +58,7 @@ export class GamePage {
     if ( this.model.x < 6 && this.model.x > -6 && this.model.y < 9 && this.model.y > 0) { this.color = "black"; }
   }
 
+  //allows the user to set the line weight
   getWidth() {
     this.generator.ctx.lineWidth = this.lineWidth;
   }

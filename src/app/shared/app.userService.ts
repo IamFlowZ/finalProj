@@ -12,8 +12,8 @@ import 'rxjs/add/operator/retry';
 
 @Injectable()
 export class LobbyService {
-private userUrl = "http://localhost:3000/api/users";
-private lobbyUrl = "http://localhost:3000/api/lobbies";
+private userUrl = "http://ec2-18-220-235-93.us-east-2.compute.amazonaws.com:3000/api/users";
+private lobbyUrl = "http://ec2-18-220-235-93.us-east-2.compute.amazonaws.com:3000/api/lobbies/";
 private headers = new Headers ({ 'Content-type': 'application/json'});
 lobby: Lobby;
 user: User;
@@ -32,11 +32,13 @@ user: User;
   userLogin(username: string) {
     var userURL = this.userUrl + "/" + username;
     console.log("url being called: " + userURL);
-    this.http.get(userURL)
+    return this.http.get(userURL)
     .retry(5)
     .subscribe(data => {
-      console.log(data);
-      // this.user.userId = data['userId'];
+      // var user = JSON.stringify(data);
+      this.user = data.json();
+      console.log(this.user.userId);
+      // this.user = user.userId;
     },
     (err => {
       if(err.error instanceof Error) {
@@ -45,8 +47,8 @@ user: User;
       else {
         console.log('Backend returned code ${err.status}, body was ${err.error}');
       }
-    })
-    )
+    }))
+    // )
       // .map((response: Response) => response.json() as User);
       // err => {this.handleError};
   }

@@ -1,10 +1,10 @@
 <ion-content padding>
-<div id="gameWindow">
+<div id="gameWindow" >
   <div id="gameInfo">
     <button ion-button (click)="startGame()" id="startBtn">Start!</button>
     <p>:{{timer}}</p> <p>your color: {{color}}</p>
     <button (click)="undo()" id="undoBtn">undo</button>
-    <div class="col-md-3 col-md-offset-6"><label for="lineWidth">Line width: </label>
+    <div ><label for="lineWidth">Line width: </label>
       <input type="text" id="lineWidth" [(ngModel)] = "lineWidth" name="lineWidth">
     </div>
   </div>
