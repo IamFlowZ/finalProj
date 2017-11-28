@@ -28,7 +28,7 @@ user: User;
     .subscribe(data => {
       this.lobby = data.json();
       // console.log(this.lobby);
-      console.log("id:" + this.lobby.lobbyId + " users: " + this.lobby.userIds + " scores: " + this.lobby.userScores);
+      localStorage.setItem('lobby', JSON.stringify(this.lobby));
     },
     (err => {
       if(err.error instanceof Error) {
