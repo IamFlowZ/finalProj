@@ -1,5 +1,7 @@
 export class Lobby {
-  public Users: number[];
-  public gameTimer: number;
-  public prompts: string[];
+  lobbyId: number;
+  userIds: number[];
+  userScores: number[];
+  gameTimer: number;
+  prompts: string[];
 }

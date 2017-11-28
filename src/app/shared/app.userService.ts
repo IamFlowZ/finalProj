@@ -5,15 +5,13 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { UserLogin } from '../models/userLogin';
 import { Lobby } from '../models/lobbyModel';
 import { User } from '../models/userModel';
-// import { Delay } from './delayService';
-import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/retry';
 
 
 @Injectable()
 export class LobbyService {
-private userUrl = "http://ec2-18-220-235-93.us-east-2.compute.amazonaws.com:3000/api/users";
-private lobbyUrl = "http://ec2-18-220-235-93.us-east-2.compute.amazonaws.com:3000/api/lobbies/";
+private userUrl = "http://ec2-18-216-244-36.us-east-2.compute.amazonaws.com:3000/api/users";
+private lobbyUrl = "http://ec2-18-216-244-36.us-east-2.compute.amazonaws.com:3000/api/lobbies";
 private headers = new Headers ({ 'Content-type': 'application/json'});
 lobby: Lobby;
 user: User;
@@ -24,37 +22,47 @@ user: User;
 
   getLobby(id: number) {
     var lobbyURL = this.lobbyUrl + "/" + id;
+    console.log("url being called: " + lobbyURL);
     return this.http.get(lobbyURL)
-    .map((response: Response) => response.json().data as Lobby);
-    // err => {this.handleError}
+    .retry(5)
+    .subscribe(data => {
+      this.lobby = data.json();
+      // console.log(this.lobby);
+      console.log("id:" + this.lobby.lobbyId + " users: " + this.lobby.userIds + " scores: " + this.lobby.userScores);
+    },
+    (err => {
+      if(err.error instanceof Error) {
+        console.log('An error occured during lobby call: ', err.error.message);
+      }
+      else {
+        console.log('Backend returned an error during lobby call: ${err.status}, body was ${err.error}');
+      }
+    }))
   }
 
   userLogin(username: string) {
     var userURL = this.userUrl + "/" + username;
     console.log("url being called: " + userURL);
+    // localStorage.clear();
     return this.http.get(userURL)
     .retry(5)
     .subscribe(data => {
-      // var user = JSON.stringify(data);
       this.user = data.json();
-      console.log(this.user.userId);
-      // this.user = user.userId;
+      localStorage.setItem('currentUser', JSON.stringify(this.user));
     },
     (err => {
       if(err.error instanceof Error) {
-        console.log('An error occured: ', err.error.message);
+        console.log('An error occured during user call: ', err.error.message);
       }
       else {
-        console.log('Backend returned code ${err.status}, body was ${err.error}');
+        console.log('Backend returned an error during user call: ${err.status}, body was ${err.error}');
       }
     }))
-    // )
-      // .map((response: Response) => response.json() as User);
-      // err => {this.handleError};
+
   }
 
-  postLobby(user: number[], prompts: string[], timer: number) {
-    this.lobby.Users = user;
+  postLobby(users: number[], prompts: string[], timer: number) {
+    this.lobby.userIds = users;
     this.lobby.prompts = prompts;
     this.lobby.gameTimer = timer;
     this.http.post(this.lobbyUrl, this.lobby);

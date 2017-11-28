@@ -20,7 +20,8 @@ export class HomePage {
   pushPageGame: any;
   pushPageLobbyCreate: any;
   user: User;
-  lobbyDisplay = new Lobby;
+  lobby: Lobby;
+  lobbies: Lobby[];
   message: any;
   // lobbies: any;
 
@@ -32,27 +33,26 @@ export class HomePage {
     this.pushPageGame = GamePage;
     this.pushPageLobbyCreate = LobbyCreate;
 
-
-    //not so sure about this
-    // const currentUser = navParams.get('user');
-
   }
 
   ngOnInit() {
-
+    this.user = this.navParams.get('currentUser');
+    console.log("navParams passed this user: " + this.user.userId);
     this.getLobbies();
   }
 
   //needs work
   getLobbies() {
-    this.user = this.backupUser;
     const lobbies = this.user.lobbyId;
     lobbies.forEach(lobbyId => {
-      this.lobbyService.getLobby(lobbyId)
-      .subscribe((response) => {
-        this.lobbyDisplay = response;
-      });
+      this.lobbyService.getLobby(lobbyId);
+      this.lobby = JSON.parse(localStorage.getItem('lobby'));
+      this.lobbies.push(this.lobby);
+      // console.log()
     });
+    for(var i=0; i<this.lobbies.length;i++) {
+      console.log(this.lobbies[i]);
+    }
   }
 
 }

@@ -35,28 +35,10 @@ export class Login {
 
 
   userLogin() {
-    this.lobbyService.userLogin(this.model.username)
-    //   .subscribe(data => {
-    //     // JSON.stringify(data);
-    //     this.user.userId = data['userId'];
-    //     console.log(this.user.userId);
-    //     // JSON.stringify(data);
-    //     // console.log(data);
-    //   },
-    //   (err => {
-    //       if(err.error instanceof Error) {rr.error.message);
-    //       }
-    //         console.log('An error occured: ', e
-    //       else {
-    //         console.log('Backend returned code ${err.status}, body was ${err.error}');
-    //       }
-    //     })
-    // );
-      //   // JSON.stringify(data);
-      //   this.navCtrl.push(HomePage, {currentUser: data}); });
-      // this.navCtrl.push(HomePage, {currentUser: data});},
-      // error => this.handleError);
-
+    this.lobbyService.userLogin(this.model.username);
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
+    console.log("user login succesful. user: " + this.user.userId);
+    this.navCtrl.push(this.pushPageLobby, {'currentUser': this.user});
 
 
   }
