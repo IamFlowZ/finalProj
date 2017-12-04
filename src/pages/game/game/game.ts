@@ -21,7 +21,6 @@ export class GamePage {
 
   constructor(public navCtrl: NavController, private deviceMotion: DeviceMotion) {
     var options = { frequency: 100 };
-
     const subscription = this.deviceMotion.watchAcceleration(options)
       .subscribe((acceleration: DeviceMotionAccelerationData) =>
         { this.model = acceleration; this.generator.theColor = this.color; }

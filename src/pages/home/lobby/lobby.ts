@@ -21,7 +21,7 @@ export class HomePage {
   pushPageLobbyCreate: any;
   user: User;
   lobby: Lobby;
-  lobbies: Lobby[];
+  _lobbies: Lobby[] = [];
   message: any;
   // lobbies: any;
 
@@ -46,13 +46,15 @@ export class HomePage {
     const lobbies = this.user.lobbyId;
     lobbies.forEach(lobbyId => {
       this.lobbyService.getLobby(lobbyId);
-      this.lobby = JSON.parse(localStorage.getItem('lobby'));
-      this.lobbies.push(this.lobby);
-      // console.log()
+      // this.lobby = JSON.parse(localStorage.getItem('lobby'));
+      // console.log("lobby being called: " + this.lobby.lobbyId);
+      this._lobbies.push(JSON.parse(localStorage.getItem('lobby')));
+      for(var i=0; i < this._lobbies.length; i++) {
+        console.log("array at " + i + " contains: "+ this._lobbies[i].lobbyId);
+      }
+      // localStorage.removeItem('lobby');
     });
-    for(var i=0; i<this.lobbies.length;i++) {
-      console.log(this.lobbies[i]);
-    }
+
   }
 
 }

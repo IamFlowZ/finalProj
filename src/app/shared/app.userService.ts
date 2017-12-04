@@ -12,10 +12,11 @@ import 'rxjs/add/operator/retry';
 export class LobbyService {
 private userUrl = "http://ec2-18-216-244-36.us-east-2.compute.amazonaws.com:3000/api/users";
 private lobbyUrl = "http://ec2-18-216-244-36.us-east-2.compute.amazonaws.com:3000/api/lobbies";
-private headers = new Headers ({ 'Content-type': 'application/json'});
+private headers = new Headers ({'Content-type': 'application/json'});
 lobby: Lobby;
 user: User;
 
+//could possibly, (should) write generic CRUD methods
   constructor(private http: Http) {
 
   }
@@ -27,8 +28,9 @@ user: User;
     .retry(5)
     .subscribe(data => {
       this.lobby = data.json();
-      // console.log(this.lobby);
-      localStorage.setItem('lobby', JSON.stringify(this.lobby));
+      console.log("lobby recieved: " + this.lobby.lobbyId);
+      // localStorage.setItem('lobby', JSON.stringify(this.lobby));
+      localStorage.lobby = JSON.stringify(this.lobby);
     },
     (err => {
       if(err.error instanceof Error) {
@@ -43,12 +45,19 @@ user: User;
   userLogin(username: string) {
     var userURL = this.userUrl + "/" + username;
     console.log("url being called: " + userURL);
-    // localStorage.clear();
-    return this.http.get(userURL)
-    .retry(5)
-    .subscribe(data => {
-      this.user = data.json();
-      localStorage.setItem('currentUser', JSON.stringify(this.user));
+    // var userCheck = localStorage.getItem('currentUser');
+    // if(userCheck != null) {
+    //   localStorage.clear();
+    // }
+    // else {
+      return this.http.get(userURL)
+      .retry(5)
+      .subscribe(data => {
+
+        this.user = data.json();
+        // console.log(this.user.userId);
+        // localStorage.setItem('currentUser', JSON.stringify(this.user));
+        localStorage.currentUser = JSON.stringify(this.user);
     },
     (err => {
       if(err.error instanceof Error) {
@@ -57,8 +66,8 @@ user: User;
       else {
         console.log('Backend returned an error during user call: ${err.status}, body was ${err.error}');
       }
-    }))
-
+      })
+    )
   }
 
   postLobby(users: number[], prompts: string[], timer: number) {
