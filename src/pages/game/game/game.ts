@@ -29,6 +29,10 @@ export class GamePage {
 
   }
 
+  ngOnInit() {
+    this.startGame();
+  }
+
   //sets the canvas properties
   canvasStart() {
     this.generator.canvas = <HTMLCanvasElement>document.getElementById('gameSprite');

@@ -1,13 +1,33 @@
 #container {
-  padding-left: 6em;
-  padding-top: 6em;
+  width: 100%;
+  height: 100%;
+  // border: .15px solid black;
+  padding-left: 5em;
+  padding-top: 7em;
+}
+
+#header {
+  align-items: center;
+  width: 66%;
+  margin-bottom: 0em;
+  // border: .15px solid black;
 }
 
 table {
+  width: 66%;
   td {
     border: .15px solid black;
   }
   tfoot {
     padding-top: 6em;
   }
+}
+
+#loginButton {
+  margin-left: -.1em;
+
+}
+
+#registerButton {
+  margin-left: 2.3em;
 }

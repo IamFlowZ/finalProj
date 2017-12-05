@@ -1,0 +1,26 @@
+#Container {
+  height: 100%;
+  width: 100%;
+  border: .15px solid black;
+}
+
+#lobbyList {
+  margin-left: 0;
+  padding-left: 5%;
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  #lobby {
+    width:45%;
+    margin-right: 5%;
+    margin-bottom: 1em;
+    list-style: none;
+    // border: .15px solid black;
+  }
+}
+
+#footer {
+  position: absolute;
+  bottom: 3%;
+  left: 27.5%;
+}

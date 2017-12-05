@@ -1,15 +1,15 @@
 <ion-content padding>
-  <div>
-    <ul>
-      <li *ngFor="let lobby of _lobbies">
+  <div id="Container">
+    <ul id="lobbyList">
+      <li *ngFor="let lobby of _lobbies" id="lobby">
         <p>lobby: {{lobby.lobbyId}}</p>
         <p>users: {{lobby.userIds}}</p>
         <p>scores: {{lobby.userScores}}</p>
         <button ion-button [navPush]=pushPageGame id="startButton">Start!</button>
       </li>
     </ul>
-  </div>
-  <div>
+  <div id="footer">
     <button ion-button [navPush]=pushPageLobbyCreate id="createButton">Create A Lobby!</button>
   </div>
+</div>
 </ion-content>
