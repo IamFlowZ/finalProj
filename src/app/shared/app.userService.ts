@@ -47,7 +47,7 @@ user: User;
     console.log("url being called: " + userURL);
     // var userCheck = localStorage.getItem('currentUser');
     // if(userCheck != null) {
-    //   localStorage.clear();
+    //   localStorage.remove('currentUser);
     // }
     // else {
       return this.http.get(userURL)

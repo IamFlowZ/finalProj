@@ -49,13 +49,13 @@ export class GamePage {
 
   //function that allows the user to change the color by tilting the device
   getColor() {
-    if ( this.model.x > 6) { this.color = "red"; }
+    if ( this.model.x > 2 && this.model.y < 7) { this.color = "red"; }
 
-    if ( this.model.x < -6) { this.color = "blue"; }
+    if ( this.model.x < -2 && this.model.y < 7) { this.color = "blue"; }
 
-    if ( this.model.y > 9) { this.color = "green"; }
+    if ( this.model.x == 0 && this.model.y > 5) { this.color = "green"; }
 
-    if ( this.model.y < 0) { this.color = "yellow"; }
+    if ( this.model.x == 0 && this.model.y > 7) { this.color = "yellow"; }
 
     //if all values are between those......
     if ( this.model.x < 6 && this.model.x > -6 && this.model.y < 9 && this.model.y > 0) { this.color = "black"; }
@@ -76,7 +76,7 @@ export class GamePage {
   }
 
   async startTimer() {
-    for (let i = 0; i <=30; i++) {
+    for (let i = 0; i <=90; i++) {
       const timer = await this.delay(1000, i);
       this.timer = timer;
     }

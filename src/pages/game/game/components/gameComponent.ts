@@ -44,7 +44,6 @@ public draw = (event) => {
 
   endPointer = (event) => {
     this.canvas.removeEventListener("pointermove", this.draw, false);
-
     delete this.lastPt;
   }
 

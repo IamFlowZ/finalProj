@@ -46,13 +46,13 @@ export class HomePage {
     const lobbies = this.user.lobbyId;
     lobbies.forEach(lobbyId => {
       this.lobbyService.getLobby(lobbyId);
-      // this.lobby = JSON.parse(localStorage.getItem('lobby'));
-      // console.log("lobby being called: " + this.lobby.lobbyId);
+      //probably something to do with the run order, need to remove the lobby before setting it again
       this._lobbies.push(JSON.parse(localStorage.getItem('lobby')));
+
       for(var i=0; i < this._lobbies.length; i++) {
         console.log("array at " + i + " contains: "+ this._lobbies[i].lobbyId);
       }
-      // localStorage.removeItem('lobby');
+
     });
 
   }
