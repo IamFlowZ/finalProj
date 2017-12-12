@@ -4,6 +4,7 @@ export class LineGen {
   public lastPt?: any;
   public theColor: string;
   public lineWidth: number;
+  public image: any;
 
 public start = () => {
   this.canvas.addEventListener("pointerdown", this.newLine, false);
@@ -52,7 +53,7 @@ public draw = (event) => {
   }
 
   save() {
-    this.canvas.toDataURL("image/png");
+    this.image = this.canvas.toDataURL("image/png");
 
   }
 

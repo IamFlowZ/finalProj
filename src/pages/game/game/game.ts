@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { DeviceMotion, DeviceMotionAccelerationData, DeviceMotionAccelerometerOptions } from '@ionic-native/device-motion';
 import { LineGen } from './components/gameComponent';
 import { Orientation } from './components/orientationTracker';
+import { SocketService } from '../../../app/shared/app.socketService';
 // import { LobbyService } from '../../../app/shared/app.userService';
 
 @Component({
@@ -19,11 +20,12 @@ export class GamePage {
   y: number;
   lineWidth: number;
 
-  constructor(public navCtrl: NavController, private deviceMotion: DeviceMotion) {
+  constructor(private navCtrl: NavController, private deviceMotion: DeviceMotion, private socketService: SocketService) {
     var options = { frequency: 100 };
     const subscription = this.deviceMotion.watchAcceleration(options)
-      .subscribe((acceleration: DeviceMotionAccelerationData) =>
-        { this.model = acceleration; this.generator.theColor = this.color; }
+        .subscribe((acceleration: DeviceMotionAccelerationData) => {
+        this.model = acceleration; this.generator.theColor = this.color;
+        }
     );
 
 
@@ -94,6 +96,14 @@ export class GamePage {
       this.generator.ctx.save();
       this.getColor();
       this.getWidth();
+    }
+  }
+
+  endGame() {
+    if(this.timer == 30){
+      this.generator.save();
+      this.navCtrl.push('');
+      this.socketService.sendImage(this.generator.image);
     }
   }
 
