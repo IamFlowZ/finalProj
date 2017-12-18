@@ -1,9 +1,11 @@
 <ion-content padding>
-<div id="container" >
-  <h1 id="header">Login:</h1>
-  <div>
-    <form name="form" #Login (ngSubmit)="userLogin()">
+<div id="loginContainer">
+  <div id="loginForm">
+    <form name="form" #Login (ngSubmit)="userLogin()" >
       <table id="loginTemplate">
+        <thead>
+          <h1 id="header">Login: </h1>
+        </thead>
         <tbody>
           <tr>
             <td><input type="text" class="form-control" placeholder="Username: " [(ngModel)] = "model.username" name="username" requried/></td>
@@ -19,6 +21,5 @@
       </tfoot>
     </form>
   </div>
-  <img src="../../../assets/images/icon_md.png" alt="" id="logo">
 </div>
 </ion-content>

@@ -3,7 +3,8 @@ import { NavController } from 'ionic-angular';
 import { DeviceMotion, DeviceMotionAccelerationData, DeviceMotionAccelerometerOptions } from '@ionic-native/device-motion';
 import { LineGen } from './components/gameComponent';
 import { Orientation } from './components/orientationTracker';
-import { SocketService } from '../../../app/shared/app.socketService';
+// import { SocketService } from '../../../app/shared/app.socketService';
+// private socketService: SocketService
 // import { LobbyService } from '../../../app/shared/app.userService';
 
 @Component({
@@ -20,7 +21,7 @@ export class GamePage {
   y: number;
   lineWidth: number;
 
-  constructor(private navCtrl: NavController, private deviceMotion: DeviceMotion, private socketService: SocketService) {
+  constructor(private navCtrl: NavController, private deviceMotion: DeviceMotion, ) {
     var options = { frequency: 100 };
     const subscription = this.deviceMotion.watchAcceleration(options)
         .subscribe((acceleration: DeviceMotionAccelerationData) => {
@@ -53,14 +54,14 @@ export class GamePage {
   getColor() {
     if ( this.model.x > 2 && this.model.y < 7) { this.color = "red"; }
 
-    if ( this.model.x < -2 && this.model.y < 7) { this.color = "blue"; }
+   else if ( this.model.x < -2 && this.model.y < 7) { this.color = "blue"; }
 
-    if ( this.model.x == 0 && this.model.y > 5) { this.color = "green"; }
+   else if ( this.model.x == 0 && this.model.y > 5) { this.color = "green"; }
 
-    if ( this.model.x == 0 && this.model.y > 7) { this.color = "yellow"; }
+   else if ( this.model.x == 0 && this.model.y > 7) { this.color = "yellow"; }
 
     //if all values are between those......
-    if ( this.model.x < 6 && this.model.x > -6 && this.model.y < 9 && this.model.y > 0) { this.color = "black"; }
+   else if ( this.model.x < 6 && this.model.x > -6 && this.model.y < 9 && this.model.y > 0) { this.color = "black"; }
   }
 
   //allows the user to set the line weight
@@ -88,7 +89,7 @@ export class GamePage {
   async startGame() {
     this.startTimer();
     this.canvasStart();
-    for (let i = 0; i <= 300; i++) {
+    for (let i = 0; i <= 900; i++) {
       this.generator.ctx.save();
       this.getColor();
       this.getWidth();
@@ -103,7 +104,7 @@ export class GamePage {
     if(this.timer == 30){
       this.generator.save();
       this.navCtrl.push('');
-      this.socketService.sendImage(this.generator.image);
+      // this.socketService.sendImage(this.generator.image);
     }
   }
 

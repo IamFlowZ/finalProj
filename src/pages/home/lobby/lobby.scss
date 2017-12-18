@@ -1,4 +1,7 @@
-#Container {
+#lobbyContainer {
+  background-color: color($colors, danger);
+  @include border-radius(1em);
+  box-shadow: 0 0 3em black;
   height: 100%;
   width: 100%;
   // border: .15px solid black;
@@ -10,11 +13,21 @@
   display: flex;
   flex-flow: row wrap;
   width: 100%;
+  padding-top: 2em;
   #lobby {
+    background: white;
+    @include border-radius(1em);
+    box-shadow: 0 0 1.5em black;
+    border: .1em inset black;
     width:45%;
     margin-right: 5%;
     margin-bottom: 1em;
     list-style: none;
+    #lobbyContent {
+      display: flex;
+      flex: row wrap;
+      align-content: center;
+    }
     // border: .15px solid black;
   }
 }

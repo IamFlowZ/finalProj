@@ -1,9 +1,28 @@
-#container {
+#loginContainer {
+  background-color: color($colors, danger);
+  align-content: center;
+  @include border-radius(1em);
+  box-shadow: 0 0 3em black;
   width: 100%;
   height: 100%;
-  padding-left: 5em;
+  padding-left: 20%;
   padding-top: 7em;
+
   // border: .15px solid black;
+}
+
+#loginForm {
+  background: white;
+  @include border-radius(1em);
+  box-shadow: 0 0 3em black;
+  border: .1em inset black;
+  display: flex;
+  flex: row wrap;
+  align-content: center;
+  padding: 1em;
+  margin: 0;
+  width: 15em;
+
 }
 
 #logo {
@@ -11,32 +30,39 @@
   margin: 0;
   padding-right: 5em;
   // border: .15px solid black;
-
 }
 
-#header {
-  padding-left: 2.25em;
-  width: 66%;
-  margin-bottom: 0em;
 
-}
 
-table {
+#loginTemplate {
+  @include gradient(black, blue);
+  @include border-radius(1em);
+  // border: .2em solid black;
   width: 66%;
   td {
+    align-content: center;
+    input {
+      padding: 0;
+      width: 13em;
+    }
     border: .15px solid black;
   }
   tfoot {
     padding-top: 6em;
   }
+  #header {
+    padding-left: 2em;
+    width: 100%;
+    margin-bottom: 0em;
+  }
 }
 
 #loginButton {
-  width: 6em;
+  width: 5.75em;
   margin-left: -.1em;
 
 }
 
 #registerButton {
-  margin-left: 1.5em;
+  margin-left: .25em;
 }
