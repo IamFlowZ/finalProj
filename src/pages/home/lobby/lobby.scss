@@ -14,26 +14,41 @@
   flex-flow: row wrap;
   width: 100%;
   padding-top: 2em;
-  #lobby {
-    background: white;
-    @include border-radius(1em);
-    box-shadow: 0 0 1.5em black;
-    border: .1em inset black;
-    width:45%;
-    margin-right: 5%;
-    margin-bottom: 1em;
-    list-style: none;
-    #lobbyContent {
-      display: flex;
-      flex: row wrap;
-      align-content: center;
+    #lobbyTitle {
+      margin-left: 7.5em;
     }
+    #lobby {
+      background: white;
+      @include border-radius(1em);
+      box-shadow: 0 0 1.5em black;
+      border: .1em inset black;
+      width:100%;
+      margin-right: 5%;
+      margin-bottom: 1em;
+      list-style: none;
+        #contentLeft {
+          width: 45%;
+          padding-bottom: 0;
+        }
+        #contentRight {
+          width: 45%;
+          margin-top: -4.25em;
+          margin-left: 11em;
+        }
+        #lobbyContent {
+          display: flex;
+          flex: row wrap;
+          align-content: center;
+        }
+        #startButton {
+          margin-left: 7.5em;
+        }
     // border: .15px solid black;
   }
 }
 
 #footer {
-  position: absolute;
+  position: relative;
   bottom: 3%;
   left: 27.5%;
 }

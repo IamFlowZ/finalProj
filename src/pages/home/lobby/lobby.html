@@ -2,9 +2,15 @@
   <div id="lobbyContainer">
     <ul id="lobbyList">
       <li *ngFor="let lobby of _lobbies" id="lobby">
-        <p id="lobbyContent">lobby: {{lobby.lobbyId}}</p>
-        <p id="lobbyContent">users: {{lobby.userIds}}</p>
-        <p id="lobbyContent">scores: {{lobby.userScores}}</p>
+        <p id="lobbyTitle">lobbyName: {{lobby.lobbyId}}</p>
+        <div id="contentLeft">
+          <p id="lobbyContent">users: {{lobby.userIds}}</p>
+          <p id="lobbyContent">scores: {{lobby.userScores}}</p>
+        </div>
+        <div id="contentRight">
+          <p id="lobbyContent">timer: </p>
+          <p id="lobbyContent">prompt: </p>
+        </div>
         <button ion-button [navPush]=pushPageGame id="startButton">Start!</button>
       </li>
     </ul>

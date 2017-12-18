@@ -2,10 +2,12 @@
 <div id="gameWindow" >
   <div id="gameInfo">
     <h1 id="timer">:{{timer}}</h1>
+    <p id="prompt">Your Prompt: <strong>*FillerPrompt*</strong></p>
     <button ion-button (click)="undo()" id="undoBtn">undo</button>
-    <p id="color">your color: <strong> {{color}}</strong></p>
+    <button ion-button id="saveBtn">save</button>
+    <p id="color">Your Color: <strong> {{color}}</strong></p>
     <div id="lineWidth">
-      <label for="lineWidth">Line width: </label>
+      <label for="lineWidth">Line Width: </label>
       <input type="text" [(ngModel)]="lineWidth" name="lineWidth">
     </div>
   </div>
