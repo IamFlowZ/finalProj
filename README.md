@@ -1,1 +1,1 @@
-This is my final project for CoderCamps
+This is my final project for CoderCamps, a pictonary stlye mobile-game that I've entitled "Doodles". My intentions with this project have mainly been to push myself past my comfort zone and to learn what it's like to bring everything I learned while attending CoderCamps into one project. Some of my future plans for this project include migrating from the JavaScript API to one in ASP.NET,  user authentication using Google's API and OAuth2, developing thorough unit tests, along with general refractoring where necessary.

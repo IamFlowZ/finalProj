@@ -9,11 +9,14 @@ import { User } from '../../../app/models/userModel';
 import { HomePage } from '../lobby/lobby';
 import { GamePage } from '../../game/game/game';
 import { UserCreate } from '../../create/user/userCreate';
+//put orientation in the shared folder
+import {Orientation} from '../../game/game/components/orientationTracker';
 
 
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
+  styles: ['box-shadow'],
   providers: [LobbyService]
 })
 

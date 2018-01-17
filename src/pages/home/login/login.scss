@@ -2,13 +2,10 @@
   background-color: color($colors, danger);
   align-content: center;
   @include border-radius(1em);
-  box-shadow: 0 0 3em black;
   width: 100%;
   height: 100%;
   padding-left: 20%;
   padding-top: 7em;
-
-  // border: .15px solid black;
 }
 
 #loginForm {

@@ -1,10 +1,8 @@
 #lobbyContainer {
   background-color: color($colors, danger);
   @include border-radius(1em);
-  box-shadow: 0 0 3em black;
   height: 100%;
   width: 100%;
-  // border: .15px solid black;
 }
 
 #lobbyList {
